@@ -14,3 +14,5 @@ ARG BUILDER_SOURCE=/app
 LABEL maintainer="Ludin Nento <ludyyn@gmail.com>"
 WORKDIR ${BUILDER_SOURCE}
 COPY --from=builder ${BUILDER_SOURCE}/app .
+EXPOSE 8080
+ENTRYPOINT ["./app"]
