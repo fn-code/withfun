@@ -1,0 +1,14 @@
+version: "3.4"
+services:
+  jaeger:
+    container_name: jaeger
+    image: jaegertracing/all-in-one:latest
+    networks:
+    - tracing
+    ports:
+    - 16686:16686
+    - 14269:14269
+    - 14268:14268
+networks: 
+  tracing:
+    name: tracing
