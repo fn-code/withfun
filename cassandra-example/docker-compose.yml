@@ -1,0 +1,17 @@
+version: "3.8"
+services:
+  cassandra:
+    build: .
+    container_name: cassandradb
+    restart: always
+    volumes:
+      - $HOME/docker/volumes/cassandra:/var/lib/cassandra
+    environment: 
+      CASSANDRA_DC: dc1
+      CASSANDRA_RACK: rack1
+    ports: 
+      - 7000:7000
+      - 7001:7001
+      - 7199:7199
+      - 9042:9042
+      - 9160:9160
