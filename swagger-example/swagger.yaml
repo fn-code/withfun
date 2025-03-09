@@ -1,0 +1,53 @@
+basePath: /
+consumes:
+- application/json
+definitions:
+  dataModel:
+    properties:
+      id:
+        description: id for userid
+        example: 1
+        format: int64
+        type: integer
+        x-go-name: ID
+      name:
+        description: name is user name
+        example: ludinnento
+        type: string
+        x-go-name: Name
+    required:
+    - id
+    - name
+    type: object
+    x-go-name: DataModel
+    x-go-package: github.com/fn-code/swagger-example/model
+info:
+  description: Welcome to the test HTTP API documentation. You will find documentation
+    for all HTTP APIs here.
+  title: TestAPP
+  version: latest
+paths:
+  /v1/api/data:
+    get:
+      consumes:
+      - application/json
+      description: Get Data show all user data, that already inserted
+      operationId: GetData
+      produces:
+      - application/json
+      responses:
+        "200":
+          $ref: '#/responses/dataModelResponseWrapper'
+      tags:
+      - data
+produces:
+- application/json
+responses:
+  dataModelResponseWrapper:
+    description: ""
+    schema:
+      $ref: '#/definitions/dataModel'
+schemes:
+- http
+- https
+swagger: "2.0"

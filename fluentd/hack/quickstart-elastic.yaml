@@ -1,0 +1,56 @@
+version: "3.9"
+services:
+  fluentd:
+    depends_on:
+      - myapp
+      - elasticsearch
+    container_name: fluentd
+    build:
+      context: .
+      dockerfile: ./fluentd/Dockerfile
+    volumes:
+      - ./logfile/logjson.log:/fluentd/log/files/myapp-logjson.log
+      - ./config/elastic:/fluentd/etc/ # fluentd configuration
+    networks:
+      - mynet
+  myapp:
+    container_name: myapp
+    image: simpleapp-withlog:latest
+    volumes:
+      - type: bind
+        source: ./logfile/logjson.log
+        target: /app/logjson.log
+    ports:
+      - "8080:8080"
+  elasticsearch:
+    image: elasticsearch:8.4.2
+    container_name: elasticsearch
+    ports:
+      - "9200:9200"
+    environment:
+      - node.name=elasticsearch
+      - cluster.initial_master_nodes=elasticsearch
+      - bootstrap.memory_lock=true
+      - xpack.security.enabled=false
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    networks:
+      - mynet
+  kibana:
+    image: kibana:8.4.2
+    container_name: kibana
+    ports:
+      - "5601:5601"
+    environment:
+      SERVER_NAME: kibana.example.org
+      ELASTICSEARCH_HOSTS: '["http://elasticsearch:9200"]'
+    networks:
+      - mynet
+
+
+networks:
+  mynet:
+    driver: bridge

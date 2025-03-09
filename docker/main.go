@@ -8,6 +8,11 @@ import (
 	"os"
 )
 
+type App struct {
+	Name string `json:"name"`
+	Age  int    `json:"age"`
+}
+
 func helloHandler(w http.ResponseWriter, r *http.Request) {
 	hostname, err := os.Hostname()
 	if err != nil {

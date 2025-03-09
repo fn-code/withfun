@@ -1,0 +1,17 @@
+{
+	"ulid": "01GMAEG02JTT30ZMYQJ63CRT23",
+	"minTime": 1662451200000,
+	"maxTime": 1662458400000,
+	"stats": {
+		"numSamples": 287413,
+		"numSeries": 692,
+		"numChunks": 2390
+	},
+	"compaction": {
+		"level": 1,
+		"sources": [
+			"01GMAEG02JTT30ZMYQJ63CRT23"
+		]
+	},
+	"version": 1
+}

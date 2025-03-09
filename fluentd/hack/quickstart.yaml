@@ -1,0 +1,22 @@
+version: "3.9"
+services:
+  fluentd:
+    depends_on:
+      - myapp
+    container_name: fluentd
+    image: fluent/fluentd:v1.14.0-debian-1.0
+    volumes:
+      - /var/lib/docker/containers:/fluentd/log/containers # reading fluentd container log
+      - ./logfile/logjson.log:/fluentd/log/files/myapp-logjson.log
+      - ./config/local:/fluentd/etc/ # fluentd configuration
+      - ./fluentd-output-file:/output # Logs for Fluentd output, collect logs and store it here for demo
+  myapp:
+    container_name: myapp
+    image: simpleapp-withlog:latest
+    volumes:
+      - type: bind
+        source: ./logfile/logjson.log
+        target: /app/logjson.log
+    ports:
+      - "8080:8080"
+
